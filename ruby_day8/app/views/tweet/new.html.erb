@@ -1,0 +1,11 @@
+<h2>글쓰기</h2>
+<form action="/tweet/create" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <!--<input type="text" name="content" placeholder="내용을 입력하세요" autofocus style="width: 300px;">-->
+    <textarea name="content" placeholder="내용을 입력하세요" autofocus style="width: 600px; height: 400px;"></textarea>
+    <div><button>등록</button></div>
+</form>
+
+<!-- <%= form_tag('/tweet/create') do %> -->
+<!--    ... -->
+<!-- <% end %> -->

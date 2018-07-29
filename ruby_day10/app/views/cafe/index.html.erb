@@ -1,0 +1,8 @@
+<h2>카페 목록</h2>
+<hr>
+<div>
+  <% @cafes.each do |cafe| %>
+    <a href="/cafe/<%= cafe.id %>">카페명: <%= cafe.title %></a>
+  <% end %>
+</div>
+<a href="/cafe/new">카페 생성</a>

@@ -1,0 +1,102 @@
+<h1><%= @movie.title %></h1>
+<hr>
+<p><%= @movie.description %></p>
+
+<%= link_to 'Edit', edit_movie_path(@movie) %> |
+<%= link_to 'Back', movies_path %>
+<hr>
+<% if @user_likes_movie.nil? %>
+  <button class="like btn btn-info">LIKE(<span class="like-count"><%= @movie.likes.count %></span>)</button>
+<% else %>
+  <button class="like btn btn-warning text-white">UNLIKE(<span class="like-count"><%= @movie.likes.count %></span>)</button>
+<% end %>
+<hr>
+
+<form class="comment text-center">
+  <input type="text" name="contents" class="form-control comment-contents" placeholder="댓글을 입력하세요">
+  <button class="btn btn-success">댓글 작성</button>
+</form>
+
+<h3>댓글</h3>
+<ul class="list-group comment-list">
+  <% @movie.comments.reverse.each do |comment| %>
+    <li class="comment-<%= comment.id %> list-group-item d-flex justify-content-between">
+      <span class="comment-detail-<%= comment.id %>"><%= comment.contents %></span>
+      <!-- comment의 id를 button에서 데이터 속성 파라미터로 넘긴다 -->
+      <div>
+        <button data-id="<%= comment.id %>" class="btn btn-warning text-white edit-comment">EDIT</button>
+        <button data-id="<%= comment.id %>" class="btn btn-danger destroy-comment">X</button>
+      </div>
+    </li>
+  <% end %>
+</ul>
+<hr>
+<script>
+$(document).on('ready', function() {
+  $('.like').on('click', function() {
+    console.log("like!!!");
+    $.ajax({
+      url: '/likes/<%= @movie.id %>'
+    });
+  });
+  
+  $('.comment').on('submit', function(e) {
+    e.preventDefault();
+    var comm = $('.comment-contents').val();
+    
+    $.ajax({
+      url: '/movies/<%= @movie.id %>/comments',
+      method: 'POST',
+      data: {
+        contents: comm
+      }
+    });
+  });
+  
+  
+  // $('.destroy-comment').on('click', function() {
+  // DOM Tree 새로 로드 한 뒤 .destroy-comment 찾아서 삭제 실행
+  $(document).on('click', '.destroy-comment', function() {
+      console.log("destroyed!");
+      // $(this)를 통해 이벤트가 발생한 객체를 찾는다.
+      // $(this).parent().remove();
+    var comment_id = $(this).attr('data-id'); // == $(this).data('id')
+    console.log(comment_id);
+    $.ajax({
+      url: '/movies/comments/' + comment_id,
+      method: 'delete'
+    })
+  });
+  
+  $(document).on('click', '.edit-comment', function() {
+    console.log($('.update-comment'))
+    if($('.update-comment').length === 0) {
+      var comment_id = $(this).data('id');
+      var edit_comment = $(`.comment-detail-${comment_id}`);
+      var contents = edit_comment.text().trim();
+      $(`.comment-detail-${comment_id}`).html(`
+        <input type="text" class="form-control edit-comment-${comment_id}" value="${contents}">
+      `);
+      $(this).text("확인").removeClass("edit-comment").addClass("update-comment btn-dark");
+    } else {
+      alert('한번에 하나만 수정하슈');
+      return false;
+    }
+  });
+  
+  $(document).on('click', '.update-comment', function() {
+      console.log('update');
+    var comment_id = $(this).data('id');
+    var comment_form = $(`.edit-comment-${comment_id}`)
+      console.log(comment_form.val());
+    
+    $.ajax({
+      url: "/movies/comments/" + comment_id,
+      method: "patch",
+      data: {
+        contents: comment_form.val()
+      }
+    })
+  })
+});
+</script>

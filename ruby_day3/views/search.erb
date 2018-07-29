@@ -1,0 +1,21 @@
+<p>----- 'form action'으로 검색 -----</p>
+<form action="https://search.naver.com/search.naver">
+    <input type="text" name="query" placeholder="네이버검색">
+    <button>검색</button>
+</form>
+<form action="https://www.google.co.kr/search">
+    <input type="text" name="q" placeholder="구글검색">
+    <button>검색</button>
+</form>
+<hr>
+<p>----- 'action 없이 post만 사용해서 자기 url에서 redirect로 검색' -----</p>
+<form method="POST">
+    <input type="hidden" name="engine" value="naver">
+    <input type="text" name="query" placeholder="네이버검색">
+    <input type="submit" value="검색">
+</form>
+<form method="POST">
+    <input type="hidden" name="engine" value="google">
+    <input type="text" name="q" placeholder="구글검색">
+    <input type="submit" value="검색">
+</form>

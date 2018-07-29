@@ -1,0 +1,12 @@
+var like_count = parseInt($('.like-count').text());
+if( <%= @like.frozen? %> ) {
+    // 좋아요가 취소된 경우: 좋아요 취소 버튼 -> 좋아요 버튼
+  like_count = (like_count) - 1
+  alert('좋아요 취소');
+  $('.like').html(`LIKE(<span class='like-count'>${like_count}</span>)`).removeClass("btn-warning").addClass("btn-info");
+} else {
+    // 좋아요가 새로 눌린 경우: 좋아요 버튼 -> 좋아요 취소 버튼
+  like_count = (like_count) + 1
+  alert('좋아요');
+  $('.like').html(`UNLIKE(<span class='like-count'>${like_count}</span>)`).removeClass("btn-info").addClass("btn-warning text-white");
+};

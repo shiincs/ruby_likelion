@@ -1,0 +1,13 @@
+<h2>트윗 목록</h2>
+<div class="list-group">
+    <% @boards.reverse.each do |board|%>
+    <a class="list-group-item list-group-item-action" href="/tweet/<%= board.id %>">
+        <%= truncate(board.contents, length: 13) %> 
+        <small>(<%= board.ip_address %>, <%= board.region %>)</small>
+    </a>
+    <% end %>
+</div>
+<a class="btn btn-primary" href="/tweet/new">글쓰기</a>
+
+
+    

@@ -1,0 +1,12 @@
+$('.comment-list').prepend(`
+  <li class="comment-<%= @comment.id %> list-group-item d-flex justify-content-between">
+    <span class="comment-detail-<%= @comment.id %>"><%= @comment.contents %></span>
+    <!-- comment의 id를 button에서 데이터 속성 파라미터로 넘긴다 -->
+    <div>
+      <button data-id="<%= @comment.id %>" class="btn btn-warning text-white edit-comment">EDIT</button>
+      <button data-id="<%= @comment.id %>" class="btn btn-danger destroy-comment">X</button>
+    </div>
+  </li>
+`);
+$('.comment-contents').val('');
+alert('댓글등록완료');

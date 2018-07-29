@@ -1,0 +1,10 @@
+<h2>회원정보</h2>
+<hr>
+<div>ID: <%= @user.uid %></div>
+<div>LAST LOGIN AT: <%= @user.ip_address %></div>
+<div>이 유저가 작성한 글</div>
+<% @user.posts.each do |post| %>
+  <%= link_to post.title, "/board/#{post.id}" %><br>
+<% end %>
+<a href="/users">목록</a>
+<a href="/user/<%= @user.id %>/edit">수정</a>

@@ -1,0 +1,7 @@
+<h2>글 수정하기</h2>
+<form action="/tweet/<%= @board.id %>/update" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <!--<input type="text" name="content" value="<%= @board.contents %>" autofocus style="width: 300px;" placeholder="내용을 입력하세요">-->
+    <textarea name="content" autofocus style="width: 600px; height: 400px;" placeholder="내용을 입력하세요"><%= @board.contents %></textarea>
+    <div><button>수정</button></div>
+</form>

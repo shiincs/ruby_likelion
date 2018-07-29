@@ -1,0 +1,112 @@
+<% if user_signed_in? %>
+<%= current_user.email %> / <%= link_to 'log out', destroy_user_session_path, method: "delete" %>
+<% else %>
+<%= link_to 'log in', new_user_session_path %>
+<% end %>
+
+<hr>
+
+<h1>Chat Rooms</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>방제</th>
+      <th>인원</th>
+      <th>방장</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody class="chat_room_list">
+    <% @chat_rooms.reverse.each do |chat_room| %>
+      <tr class="row<%= chat_room.id %>">
+        <td><span class="title<%= chat_room.id %>"><%= chat_room.title %></span></td>
+        <td><span class="current<%= chat_room.id %>"><%= chat_room.admissions.size %></span>/<span class="count<%= chat_room.id %>"><%= chat_room.max_count %></span></td>
+        <td><%= chat_room.master_id%></td>
+        <td><%= link_to 'Show', chat_room %></td>
+        <% if chat_room.master_id == current_user.email %>
+          <td><%= link_to 'Edit', "chat_rooms/#{chat_room.id}/edit" %></td>
+          <td><%= link_to 'Del', chat_room, method: 'delete', data: {confirm: "삭제하쉴?"} %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Chat Room', new_chat_room_path %>
+
+<script>
+$(document).on('ready', function() {
+  // 방이 만들어졌을 때, 방에 대한 데이터를 받아서
+  // 방 목록에 추가해서 js functino
+    function room_created(data) {
+      $('.chat_room_list').prepend(`
+        <tr class="row${data.id}">
+          <td><span class="title${data.id}">${data.title}</span></td>
+          <td><span class="current${data.id}">0</span>/<span class="count${data.id}">${data.max_count}</span></td>
+          <td>${data.master_id}</td>
+          <td><a href="/chat_rooms/${data.id}">Show</a></td>
+          <td><a href="/chat_rooms/${data.id}/edit">Edit</a></td>
+          <td><a href="/chat_rooms/${data.id}" data-method="delete" data-confirm="삭제하쉴?">Del</a></td>
+        </tr>`);
+    }
+    
+    function room_destroyed(data) {
+      $(`.row${data.id}`).remove();
+    }
+    
+    function room_updated(data) {
+      // $(`.row${data.id}`).remove();
+      // room_created(data);
+      var count = $(`.count${data.id}`);
+      var title = $(`.title${data.id}`);
+      console.log(data);
+      // console.dir(data.chat_room_id);
+      count.text(`${data.max_count}`);
+      title.text(`${data.title}`);
+    }
+    
+    function user_joined(data) {
+      var current = $(`.current${data.chat_room_id}`);
+      console.log(count);
+      current.text(parseInt(current.text())+1);
+    }
+    
+    function user_exited(data) {
+      var current = $(`.current${data.chat_room_id}`);
+      current.text(parseInt(current.text())-1);
+    }
+    
+    var pusher = new Pusher("<%= ENV["pusher_key"] %>", {
+      cluster: "<%= ENV["pusher_cluster"] %>",
+      encrypted: true
+    });
+
+    var channel = pusher.subscribe('chat_room'); //channel변수는 
+    channel.bind('create', function(data) {      //chat_room에서 만들어진 ~을 pusher로 구독(subscribe)하는 
+      console.log(data);
+      room_created(data);
+    });
+    channel.bind('join', function(data) {
+      console.log(data);
+      user_joined(data);
+    });
+    channel.bind('exit', function(data) {
+      user_exited(data);
+    })
+    channel.bind('destroy', function(data) {
+      console.log(data);
+      room_destroyed(data);
+    })
+    channel.bind('update', function(data) {
+      console.log(data);
+      room_updated(data);
+    })
+});
+  
+</script>

@@ -1,0 +1,7 @@
+<form action="/user/create" method="POST">
+    <!-- POST로 전송할 때 authenticity_token 문제를 해결하기 위한 코드 -->
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="text" name="user_name" placeholder = "회원이름">
+    <input type="password" name="password" placeholder = "비밀번호">
+    <button>등록하기</button>
+</form>

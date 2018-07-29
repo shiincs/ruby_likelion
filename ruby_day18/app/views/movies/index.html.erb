@@ -1,0 +1,121 @@
+<h1 id="title">Movies</h1>
+<input type="text" class="form-control movie-title">
+<div class="recomm-movie d-flex justify-content-start row">
+  
+</div>
+<hr>
+<div id="title" class="row">
+<% @movies.each do |movie| %>
+  <div class="card col-md-3">
+    <img class="card-img-top" src="<%= movie.image_path.thumb.url %>" alt="<%= movie.title %>">
+    <div class="card-body">
+      <h5 class="card-title"><span><%= movie.title %></span></h5>
+      <p class="card-text">Genre: <%= movie.genre %></p>
+      <p class="card-text">Director: <%= movie.director %></p>
+      <p class="card-text">Actors: <%= movie.actor %></p>
+      <%= link_to 'Details', movie_path(movie.id), class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>
+</div>
+<%= paginate @movies, theme: 'twitter-bootstrap-4' %>
+<br>
+
+<%= link_to 'New Movie', new_movie_path %>
+
+<hr>
+<% if user_signed_in? %>
+  <%= current_user.email %>
+  <%= link_to 'Logout', destroy_user_session_path, method: 'delete' %>
+<% else %>
+  <%= link_to 'Login', new_user_session_path %>
+<% end %>
+
+<script>
+  $(document).on('ready', function() {
+    $('.movie-title').on('keyup', function() {
+      var title = $(this).val();
+      // console.log($(this).val());
+      $.ajax({
+        url: '/movies/search_movie',
+        data: {
+          q: title
+        }
+      })
+    })
+  })
+</script>
+<!--
+<script>
+  var btn = document.getElementsByClassName("btn")[0];
+  var count = 0;
+  var msg = "건들지마라";
+  
+  btn.onmouseover = function() {
+    count++;
+    if(count > 3) {
+      msg = "건들지마라고 ㅅㅂ";
+    }
+    alert(msg);
+  }
+</script>
+-->
+
+<!--
+<script>
+  // func1();
+  // func2();
+  
+  // 함수 표현식 - 선언되기 이전에 사용 불가
+  var func1 = function() {
+    alert("ㅎㅇㅎㅇㅎㅇㅎㅇ");
+  }
+  
+  // 함수 선언식 - 선언되기 이전에 사용 가능
+  function func2() {
+    alert("하이염");
+  }
+  
+  var btn = document.getElementsByClassName("btn")[0];
+  btn.addEventListener("mouseover", func2);
+  
+  var btn2 = document.getElementsByClassName("btn")[1];
+  btn2.onmouseover = func1;
+</script>
+-->
+
+<!--
+<script>
+  var btn = document.getElementsByClassName("btn")[0];
+  var title = document.getElementsByClassName("card-title")[0];
+  var content = title.textContent;
+  
+  function func() {
+    console.dir(title);
+    title.innerText = "건들지마";
+  }
+  function out() {
+    title.innerText = content;
+  }
+  
+  btn.addEventListener("mouseover", func);
+  btn.addEventListener("mouseout", out);
+</script>
+-->
+
+<!--
+<script>
+  var btn = document.getElementsByClassName("btn")[0]
+  var attr = btn.getAttribute("class");
+  
+  function func() {
+    btn.setAttribute("class", "btn btn-danger");
+  }
+  function out() {
+    btn.setAttribute("class", attr);
+  }
+  
+  btn.onmouseover = func;
+  btn.onmouseout = out;
+</script>
+-->

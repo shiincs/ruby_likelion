@@ -1,0 +1,8 @@
+<h2>카페 생성</h2>
+<hr>
+<form action="/cafes" method="POST">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <div><input type="text" name="title" placeholder="카페명을 입력하세요"></div>
+  <div><textarea name="desc" placeholder="카페설명을 입력하세요"></textarea></div>
+  <button>생성</button>
+</form>

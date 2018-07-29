@@ -1,0 +1,15 @@
+<ul class="list-group">
+    <% @asks.reverse.each do |ask| %>
+    <li class="list-group-item">
+        <%= ask.question %>
+        <small>(<%= ask.ip_address %>, <%= ask.region %>)</small>
+        <a class="btn btn-info" href="/ask/<%= ask.id %>">SHOW</a>
+        <a class="btn btn-success" href="/ask/<%= ask.id %>/edit">EDIT</a>
+        <a data-confirm="삭제할까요?" class="btn btn-danger" href="/ask/<%= ask.id %>/delete">X</a>
+    </li> <!-- ask에 있는 question column을 보여준다. -->
+    <% end %>
+</ul>
+
+<div class="text-center">
+    <a href="/ask/new" class="btn btn-primary">질문하러가기</a>
+</div>

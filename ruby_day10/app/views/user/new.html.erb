@@ -1,0 +1,8 @@
+<h2>회원가입</h2>
+<hr>
+<form action="/users" method="post" class="form-group">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" class="form-control">
+  <input type="text" name="uid" class="form-control" placeholder="아이디를 입력하세요">
+  <input type="password" name="pwd" class="form-control" placeholder="비밀번호를 입력하세요">
+  <button class="btn btn-primary">가입하기</button>
+</form>

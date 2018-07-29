@@ -1,0 +1,19 @@
+<h2>회원목록</h2>
+<hr>
+<!-- 로그인 되지 않은 상태 -->
+<% if @login_user.nil? %>
+  <a href="/sign_in">로그인</a>
+<!-- 로그인 된 상태 -->
+<% else %>
+  <p>현재 로그인한 유저: <%= @login_user.uid %></p>
+  <a href="/logout">로그아웃</a>
+<% end %>
+
+<div>
+  <ul>
+  <% @users.each do |user| %>
+    <li><a href="/user/<%= user.id %>">ID: <%= user.uid %></a></li>
+  <% end %>
+  </ul>
+</div>
+<a href="/sign_up">회원가입</a>

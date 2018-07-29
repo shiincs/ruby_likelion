@@ -1,0 +1,7 @@
+<h2>카페 상세보기</h2>
+<hr>
+<div>카페명: <%= @cafe.title %></div>
+<div>카페 설명: <%= @cafe.description %></div>
+<a href="/cafes">목록</a>
+<a href="/cafe/<%= @cafe.id %>/edit">수정</a>
+<a href="/cafe/<%= @cafe.id %>" data-method="delete" data-confirm="카페를 삭제하시겠습니까?">삭제</a>

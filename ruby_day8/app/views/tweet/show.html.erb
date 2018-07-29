@@ -1,0 +1,7 @@
+<h2>트윗 보기</h2>
+<div style="border: 1px solid black">
+    <%= @content.contents %>
+</div>
+<a href="/tweets">홈</a>
+<a href="/tweet/<%= @content.id %>/edit">수정</a>
+<a href="/tweet/<%= @content.id %>/delete" data-confirm="정말 삭제하시겠습니까?">삭제</a>

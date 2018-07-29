@@ -1,0 +1,18 @@
+<h1>웹툰 추천받기</h1>
+
+<table>
+    <thead>
+        <th>이미지</th>
+        <th>제목</th>
+        <th>링크</th>
+    </thead>
+    <tbody>
+        <% @daum_webtoon.each do |toon| %>
+        <tr>
+            <td><img src="<%= toon["thumb"] %>"></td>
+            <td><%= toon["title"] %></td>
+            <td><a href="<%= toon["link"]%>">보러가기</a></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>

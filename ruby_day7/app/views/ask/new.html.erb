@@ -1,0 +1,6 @@
+<h1>질문하기</h1>
+<form action="/ask/create" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <textarea  class="form-control "name="q" placeholder="질문을 입력하세요" style="width: 500px; height: 300px;"></textarea>
+    <div><button class="btn btn-success">등록</button></div>
+</form>

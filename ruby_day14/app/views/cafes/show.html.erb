@@ -1,0 +1,23 @@
+<!-- 카페 정보 ㄴㄴ -->
+<!-- 카페에 등록된 글 -->
+<h1><%= @cafe.title %></h1>
+<p><%= @cafe.description %></p>
+
+<!-- 카페 가입버튼 -->
+<!-- 현재 유저가 멤버면 가입 버튼이 안보인다 -->
+<% # unless @cafe.is_member?(current_user) %>
+  <%= link_to 'Join Cafe', join_cafe_path(@cafe), method: 'post', class: 'btn btn-warning text-white' %>
+<% # end %>
+
+<ul class="list-group">
+  <% @cafe.posts.each do |post| %>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <%= link_to "#{post.title}", post_path(post) %>
+    <span class="badge badge-primary badge-pill"><%= post.comments.count %></span>
+  </li>
+  <% end %>
+</ul>
+
+<!-- 새글 등록버튼 -->
+<!-- prefix에 (파라미터이름: 파라미터값)을 추가해서 파라미터를 넘긴다. -->
+<%= link_to 'New Post', new_post_path(cafe_id: @cafe.id), class: 'btn btn-primary' %>

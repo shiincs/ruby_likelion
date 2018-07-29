@@ -1,0 +1,11 @@
+<h1>인덱스</h1>
+<hr>
+<ul>
+  <% @tests.each do |test| %>
+    <li><a href="/test/<%= test.id %>">
+        제목: <%= test.title %>
+        <br>
+        내용: <%= test.contents %></a></li>
+  <% end %>
+</ul>
+<a href="/test/new">글쓰기</a>

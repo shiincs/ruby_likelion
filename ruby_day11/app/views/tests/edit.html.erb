@@ -1,0 +1,13 @@
+<h1>글 수정하기</h1>
+<hr>
+<form action="/test/<%=@test.id%>" method="POST">
+  <input type="hidden" name="_method" value="PUT">
+  <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+  <div>
+  <input type="text" name="title" placeholder="제목을 입력하세요" value="<%= @test.title %>">
+  </div>
+  <div>
+    <textarea name="contents" placeholder="내용을 입력하세요"><%= @test.contents %></textarea>
+  </div>
+  <button>작성</button>
+</form>

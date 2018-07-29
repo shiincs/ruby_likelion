@@ -1,0 +1,16 @@
+<table>
+    <thead>
+        <th>IDX</th>
+        <th>ID</th>
+        <th>PW</th>
+    </thead>
+    <tbody>
+        <% @users.each do |user| %>
+        <tr>
+            <td><%= user[0] %></td>
+            <td><%= user[1] %></td>
+            <td><%= user[2] %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
